@@ -10,5 +10,6 @@ compile_commands.json
 CTestTestfile.cmake
 
 # Directories.
+bin/*
 build/*
 .vscode/
