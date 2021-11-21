@@ -1,11 +1,6 @@
-add_executable(Aban "../main.c"
-					"mm.c"
-					"os/os.c"
-					"pc.c"
-)
-
-target_include_directories(Aban PUBLIC
-								"os/"
+target_sources(Aban
+PRIVATE
+"main/main.c"
 )
 
 
