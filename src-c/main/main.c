@@ -26,7 +26,6 @@ int main(int argc, char *argv[])
 	{ // Event loop.
 		SDL_bool should_quit = SDL_FALSE;
 		SDL_Event event = {0};
-		SDL_Log("sizeof Event: %lld", sizeof(SDL_Event));
 		do
 		{
 			if (SDL_WaitEvent(&event) == 0)
