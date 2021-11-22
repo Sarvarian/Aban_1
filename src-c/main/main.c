@@ -1,10 +1,6 @@
 #include "SDL.h"
 
-static SDL_atomic_t main_should_exit = {SDL_FALSE};
-void main_exit_application()
-{
-	SDL_AtomicSet(&main_should_exit, SDL_TRUE);
-}
+char main_should_exit = SDL_FALSE;
 
 static void main_exit();
 static void main_event_process(SDL_Event *);
@@ -24,7 +20,6 @@ int main(int argc, char *argv[])
 	}
 
 	{ // Event loop.
-		SDL_bool should_quit = SDL_FALSE;
 		SDL_Event event = {0};
 		do
 		{
@@ -37,8 +32,7 @@ int main(int argc, char *argv[])
 
 			main_event_process(&event);
 
-			should_quit = SDL_AtomicGet(&main_should_exit);
-		} while (!should_quit);
+		} while (main_should_exit == SDL_FALSE);
 	}
 
 	{ // Exiting application.

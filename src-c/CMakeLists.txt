@@ -1,6 +1,8 @@
 target_sources(Aban
 PRIVATE
 "main/main.c"
+PUBLIC
+"main/main.h"
 )
 
 
