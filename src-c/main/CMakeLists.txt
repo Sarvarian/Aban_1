@@ -1,0 +1,10 @@
+target_sources(Aban
+PRIVATE
+"main.c"
+PUBLIC
+"main.h"
+)
+target_include_directories(Aban
+PUBLIC
+${CMAKE_CURRENT_LIST_DIR}
+)

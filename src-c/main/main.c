@@ -1,9 +1,10 @@
 #include "SDL.h"
 #include "input.h"
 #include "wm.h"
+#include "rtp.h"
 
 char main_should_exit = SDL_FALSE;
-char *main_fatal_error_msg = "No Error!";
+const char *main_fatal_error_msg = "No Error!";
 
 static void
 main_exit();
@@ -27,6 +28,14 @@ int main(int argc, char *argv[])
 		if (err != 0)
 		{
 			main_fatal_error(err, "Failed wm_init", main_fatal_error_msg);
+			main_exit();
+			return err;
+		}
+		// Real Time Process
+		err = rtp_init();
+		if (err != 0)
+		{
+			main_fatal_error(err, "Failed rtp_init", main_fatal_error_msg);
 			main_exit();
 			return err;
 		}
@@ -62,6 +71,7 @@ static void main_fatal_error(const int error_code, const char *error_title, cons
 
 static void main_exit()
 {
+	rtp_exit();
 	wm_exit();
 	SDL_Quit();
 }

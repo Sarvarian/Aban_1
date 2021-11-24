@@ -1,22 +1,12 @@
-target_sources(Aban
-PRIVATE
-"main/main.c"
-"input/input.c"
-"wm/wm.c"
-PUBLIC
-"main/main.h"
-"input/input.h"
-"wm/wm.h"
-)
+set(HERE ${CMAKE_CURRENT_LIST_DIR})
 
-target_include_directories(Aban
-PUBLIC
-"main"
-"input"
-"wm"
-)
+add_subdirectory("${HERE}/main")
+add_subdirectory("${HERE}/input")
+add_subdirectory("${HERE}/wm")
+add_subdirectory("${HERE}/app")
+add_subdirectory("${HERE}/rtp")
 
-set(SDL_DIR "${CMAKE_CURRENT_LIST_DIR}/sdl/")
+set(SDL_DIR "${HERE}/sdl/")
 add_subdirectory(${SDL_DIR})
 target_link_libraries(Aban SDL2 SDL2main)
 target_include_directories(Aban PUBLIC "${SDL_DIR}/include")
