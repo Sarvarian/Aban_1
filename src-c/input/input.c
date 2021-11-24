@@ -11,7 +11,7 @@ void input_event_process(SDL_Event *event)
         break;
 
     case SDL_WINDOWEVENT:
-        wm_window_event(event);
+        wm_window_event((SDL_WindowEvent *)event);
         break;
 
     default:

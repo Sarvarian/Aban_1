@@ -22,10 +22,6 @@ void wm_exit()
     }
 }
 
-void wm_close_window()
-{
-}
-
 void wm_window_event(SDL_WindowEvent *event)
 {
     static process_window_event(SDL_Window * window, SDL_Event * event);
