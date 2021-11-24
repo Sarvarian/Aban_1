@@ -29,7 +29,7 @@ int wm_request_create_new_window(WM_CNW_Request information)
 
     for (int i = 0; i < MAX_CNW_REQUESTS; i++)
     {
-        if (requests[i].callback != NULL)
+        if (requests[i].callback == NULL)
         {
             requests[i] = information;
             res = 0;

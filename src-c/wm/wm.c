@@ -1,14 +1,27 @@
 #include "SDL_events.h"
 #include "SDL_log.h"
-#include "stdio.h"
 #include "wm.h"
+#include "main.h"
 
 #define MAX_WINDOWS 8
+
+static int wm_create_new_window(const char *, int, int, int, int, Uint32);
 
 static SDL_Window *windows[MAX_WINDOWS];
 
 int wm_init()
 {
+    int res = wm_create_new_window(
+        "Aban First Window",
+        SDL_WINDOWPOS_UNDEFINED,
+        SDL_WINDOWPOS_UNDEFINED,
+        600, 800,
+        SDL_WINDOW_SHOWN);
+    if (res == -1)
+    {
+        main_fatal_error_msg = SDL_GetError();
+        return 1;
+    }
     return 0;
 }
 
@@ -67,7 +80,6 @@ static void wm_process_window_event(SDL_Window *window, SDL_WindowEvent *event)
             return;
         }
 
-        static int wm_create_new_window(const char *, int, int, int, int, Uint32);
         int res = wm_create_new_window(
             request.title,
             request.x,
@@ -87,8 +99,16 @@ static int wm_create_new_window(const char *title, int x, int y, int w, int h, U
     {
         if (windows[i] == NULL)
         {
-            windows[i] = SDL_CreateWindow(title, x, y, w, h, flags);
-            return i;
+            SDL_Window *new_window = SDL_CreateWindow(title, x, y, w, h, flags);
+            if (new_window == NULL)
+            {
+                return -1;
+            }
+            else
+            {
+                windows[i] = new_window;
+                return i;
+            }
         }
     }
 
