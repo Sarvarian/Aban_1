@@ -2,5 +2,5 @@
 extern char main_should_exit;
 inline void main_exit_application()
 {
-    main_should_exit = SDL_TRUE;
+    main_should_exit = 1;
 }

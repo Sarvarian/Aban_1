@@ -1,19 +1,32 @@
 #include "SDL.h"
+#include "input.h"
+#include "wm.h"
 
 char main_should_exit = SDL_FALSE;
+char *main_fatal_error_msg = "No Error!";
 
-static void main_exit();
-static void main_event_process(SDL_Event *);
+static void
+main_exit();
 static void main_fatal_error(const int, const char *, const char *);
 
 int main(int argc, char *argv[])
 {
 	{ // Initialization process.
 		int err = 0;
+		// SDL
 		err = SDL_Init(SDL_INIT_EVERYTHING);
 		if (err != 0)
 		{
-			main_fatal_error(err, "Failed SDL_init", SDL_GetError());
+			main_fatal_error_msg = SDL_GetError();
+			main_fatal_error(err, "Failed SDL_init", main_fatal_error_msg);
+			main_exit();
+			return err;
+		}
+		// Window Manager
+		err = wm_init();
+		if (err != 0)
+		{
+			main_fatal_error(err, "Failed wm_init", main_fatal_error_msg);
 			main_exit();
 			return err;
 		}
@@ -30,7 +43,7 @@ int main(int argc, char *argv[])
 				return 1;
 			}
 
-			main_event_process(&event);
+			input_event_process(&event);
 
 		} while (main_should_exit == SDL_FALSE);
 	}
@@ -49,12 +62,8 @@ static void main_fatal_error(const int error_code, const char *error_title, cons
 
 static void main_exit()
 {
+	wm_exit();
 	SDL_Quit();
-}
-
-static void main_event_process(SDL_Event *event)
-{
-	SDL_Log("%d\n", event->type);
 }
 
 // g
