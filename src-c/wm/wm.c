@@ -5,23 +5,10 @@
 
 #define MAX_WINDOWS 8
 
-static int wm_create_new_window(const char *, int, int, int, int, Uint32);
-
 static SDL_Window *windows[MAX_WINDOWS];
 
 int wm_init()
 {
-    int res = wm_create_new_window(
-        "First Window",
-        SDL_WINDOWPOS_UNDEFINED,
-        SDL_WINDOWPOS_UNDEFINED,
-        640, 480,
-        SDL_WINDOW_SHOWN);
-    if (res == -1)
-    {
-        main_fatal_error_msg = SDL_GetError();
-        return 1;
-    }
     return 0;
 }
 
@@ -103,7 +90,7 @@ static void wm_process_window_event(SDL_Window *window, SDL_WindowEvent *event)
     }
 }
 
-static int wm_create_new_window(const char *title, int x, int y, int w, int h, Uint32 flags)
+int wm_create_new_window(const char *title, int x, int y, int w, int h, Uint32 flags)
 {
     for (Uint8 i = 0; i < MAX_WINDOWS; i++)
     {
