@@ -66,10 +66,6 @@ void wm_event_process(SDL_Event *event)
 
 static void wm_process_cnw_requests()
 {
-}
-
-static void wm_process_window_event(SDL_Window *window, SDL_WindowEvent *event)
-{
     do
     {
         WM_CNW_Request wm_get_next_request();
@@ -91,6 +87,10 @@ static void wm_process_window_event(SDL_Window *window, SDL_WindowEvent *event)
         request.callback(res);
 
     } while (1);
+}
+
+static void wm_process_window_event(SDL_Window *window, SDL_WindowEvent *event)
+{
 }
 
 static int wm_create_new_window(const char *title, int x, int y, int w, int h, Uint32 flags)

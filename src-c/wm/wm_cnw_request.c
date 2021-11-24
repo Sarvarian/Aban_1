@@ -24,7 +24,7 @@ static WM_CNW_Request requests[MAX_CNW_REQUESTS];
 
 int wm_request_create_new_window(WM_CNW_Request information)
 {
-    int res = 1;
+    int err = 1;
     wm_request_lock();
 
     for (int i = 0; i < MAX_CNW_REQUESTS; i++)
@@ -32,13 +32,18 @@ int wm_request_create_new_window(WM_CNW_Request information)
         if (requests[i].callback == NULL)
         {
             requests[i] = information;
-            res = 0;
+            err = 0;
             break;
         }
     }
 
     wm_request_unlock();
-    return res;
+    // Sent an dummy event to make main loop start processing.
+    SDL_Event dummy_event;
+    dummy_event.type = SDL_FIRSTEVENT;
+    SDL_PushEvent(&dummy_event);
+    // Return result. '1' in case of an error and '0' in case of success.
+    return err;
 }
 
 WM_CNW_Request wm_get_next_request()
