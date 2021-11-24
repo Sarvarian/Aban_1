@@ -2,8 +2,6 @@ set(HERE ${CMAKE_CURRENT_LIST_DIR})
 
 add_subdirectory("${HERE}/main")
 add_subdirectory("${HERE}/input")
-add_subdirectory("${HERE}/wm")
-add_subdirectory("${HERE}/app")
 add_subdirectory("${HERE}/rtp")
 
 set(SDL_DIR "${HERE}/sdl/")

@@ -1,6 +1,5 @@
 #include "SDL.h"
 #include "input.h"
-#include "wm.h"
 #include "rtp.h"
 
 char main_should_exit = SDL_FALSE;
@@ -20,14 +19,6 @@ int main(int argc, char *argv[])
 		{
 			main_fatal_error_msg = SDL_GetError();
 			main_fatal_error(err, "Failed SDL_init", main_fatal_error_msg);
-			main_exit();
-			return err;
-		}
-		// Window Manager
-		err = wm_init();
-		if (err != 0)
-		{
-			main_fatal_error(err, "Failed wm_init", main_fatal_error_msg);
 			main_exit();
 			return err;
 		}
@@ -53,7 +44,6 @@ int main(int argc, char *argv[])
 			}
 
 			input_event_process(&event);
-			wm_event_process(&event);
 
 		} while (main_should_exit == SDL_FALSE);
 	}
@@ -73,7 +63,6 @@ static void main_fatal_error(const int error_code, const char *error_title, cons
 static void main_exit()
 {
 	rtp_exit();
-	wm_exit();
 	SDL_Quit();
 }
 
