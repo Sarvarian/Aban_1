@@ -49,7 +49,12 @@ void wm_event_process(SDL_Event *event)
     {
         for (Uint8 i = 0; i < MAX_WINDOWS; i++)
         {
-            const Uint32 id = SDL_GetWindowID(windows[0]);
+            if (windows[i] == NULL)
+            {
+                continue;
+            }
+
+            const Uint32 id = SDL_GetWindowID(windows[i]);
             if (id == 0)
             {
                 SDL_LogError(SDL_LOG_PRIORITY_ERROR, "In processing an window event in Window Manager module, Failed to get Window ID. SDL Error: %s", SDL_GetError());
@@ -91,11 +96,16 @@ static void wm_process_cnw_requests()
 
 static void wm_process_window_event(SDL_Window *window, SDL_WindowEvent *event)
 {
+    if (event->event == SDL_WINDOWEVENT_CLOSE)
+    {
+        static void wm_close_window_w_ptr(SDL_Window *);
+        wm_close_window_w_ptr(window);
+    }
 }
 
 static int wm_create_new_window(const char *title, int x, int y, int w, int h, Uint32 flags)
 {
-    for (int i = 0; i < MAX_WINDOWS; i++)
+    for (Uint8 i = 0; i < MAX_WINDOWS; i++)
     {
         if (windows[i] == NULL)
         {
@@ -113,6 +123,19 @@ static int wm_create_new_window(const char *title, int x, int y, int w, int h, U
     }
 
     return -1;
+}
+
+static void wm_close_window_w_ptr(SDL_Window *window)
+{
+    for (Uint8 i = 0; i < MAX_WINDOWS; i++)
+    {
+        if (windows[i] == window)
+        {
+            SDL_DestroyWindow(window);
+            windows[i] = NULL;
+            return;
+        }
+    }
 }
 
 // g
