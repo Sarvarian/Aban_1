@@ -1,6 +1,7 @@
 target_sources(Aban
 PRIVATE
 "wm.c"
+"wm_cnw_request.c"
 PUBLIC
 "wm.h"
 )

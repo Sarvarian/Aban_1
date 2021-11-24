@@ -53,6 +53,7 @@ int main(int argc, char *argv[])
 			}
 
 			input_event_process(&event);
+			wm_event_process(&event);
 
 		} while (main_should_exit == SDL_FALSE);
 	}
