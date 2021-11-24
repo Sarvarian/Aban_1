@@ -22,16 +22,14 @@ void rtp_exit()
 
 static int rtp_main(void *_data)
 {
-    SDL_Log("Hello!");
-
     void rtp_cnw_request_callback(int result);
     WM_CNW_Request info = {
         &rtp_cnw_request_callback,
-        "My Window",
+        "Real Time Process Module Window",
         SDL_WINDOWPOS_UNDEFINED,
         SDL_WINDOWPOS_UNDEFINED,
-        600,
         800,
+        600,
         SDL_WINDOW_SHOWN,
     };
     wm_request_create_new_window(info);

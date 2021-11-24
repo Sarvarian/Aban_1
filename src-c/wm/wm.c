@@ -12,10 +12,10 @@ static SDL_Window *windows[MAX_WINDOWS];
 int wm_init()
 {
     int res = wm_create_new_window(
-        "Aban First Window",
+        "First Window",
         SDL_WINDOWPOS_UNDEFINED,
         SDL_WINDOWPOS_UNDEFINED,
-        600, 800,
+        640, 480,
         SDL_WINDOW_SHOWN);
     if (res == -1)
     {
